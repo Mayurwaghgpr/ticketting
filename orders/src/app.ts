@@ -6,7 +6,7 @@ import { Errorhandle, NotFoundError } from "@ticketwithspread/common";
 import indexOrderRoter from "./routes/index";
 import newOrderRoter from "./routes/new";
 import showOrderRoter from "./routes/show";
-import deleteOrderRoter from "./routes/show";
+import deleteOrderRoter from "./routes/delete";
 const app = express();
 app.set("trust proxy", true);
 app.use(json());

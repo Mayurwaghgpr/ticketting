@@ -12,7 +12,6 @@ router.get(
   currentUser,
   async (req: Request, res: Response) => {
     const order = await Order.findById(req.params.orderId).populate("ticket");
-    console.log(req);
     if (!order) {
       throw new NotFoundError();
     }

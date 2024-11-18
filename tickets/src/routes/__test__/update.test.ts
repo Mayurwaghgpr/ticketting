@@ -28,10 +28,21 @@ it("returns a 401 if the user is not authenticated", async () => {
 });
 
 it("returns a 401 if the user does not own the ticket", async () => {
-  await request(app)
+  const response = await request(app)
     .post("/api/tickets")
     .set("Cookie", global.signup())
-    .send({ title: "sqwfdas", price: 32 })
+    .send({
+      title: "asldkfj",
+      price: 20,
+    });
+
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", global.signup())
+    .send({
+      title: "alskdjflskjdf",
+      price: 1000,
+    })
     .expect(401);
 });
 
@@ -55,8 +66,9 @@ it("updates the ticket provided valid inputs", async () => {
     .expect(200);
 
   const ticketResponse = await request(app)
-    .get(`/api/tickets${response.body.id}`)
+    .get(`/api/tickets/${response.body.id}`)
     .send();
+  console.log("response ", ticketResponse.body);
   expect(ticketResponse.body.title).toEqual("eqeefe");
   expect(ticketResponse.body.price).toEqual(40);
 });

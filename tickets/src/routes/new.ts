@@ -40,7 +40,7 @@ router.post(
       version: ticket.version,
     });
 
-    res.status(201).send(ticket);
+    res.status(200).send(ticket);
   }
 );
 

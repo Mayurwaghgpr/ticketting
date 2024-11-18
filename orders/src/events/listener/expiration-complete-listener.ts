@@ -11,18 +11,16 @@ import { OrderCancelledPublisher } from "../publisher/order-cancelled-publisher"
 
 export class ExpirationCompleteListener extends Listener<expirationCompleteEvent> {
   queueGroupName = queueGroupName;
-  subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
+  subject: Subjects.ExpirationComplete = Subjects.ExpirationComplete;
 
   async onMessage(data: expirationCompleteEvent["data"], msg: Message) {
-    console.log({ data });
     const order = await Order.findById(data.orderId).populate("ticket");
-    console.log({ order });
     if (!order) {
       console.log("first");
       throw new Error("Order not Found");
     }
+
     if (order.status === OrderStatus.Complete) {
-      console.log("not cancelled");
       return msg.ack();
     }
 
@@ -35,5 +33,6 @@ export class ExpirationCompleteListener extends Listener<expirationCompleteEvent
         id: order.ticket.id,
       },
     });
+    msg.ack();
   }
 }

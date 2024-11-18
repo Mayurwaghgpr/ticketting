@@ -1,4 +1,5 @@
 import {
+  currentUser,
   NotAuthorizedError,
   NotFoundError,
   OrderStatus,
@@ -12,10 +13,14 @@ import { natsWrapper } from "../nats-wrapper";
 const router = express.Router();
 router.delete(
   "/api/orders/:orderId",
+  currentUser,
   requireAuth,
   async (req: Request, res: Response) => {
+    console.log({ req });
     const { orderId } = req.params;
-    const order = await Order.findById(orderId);
+
+    const order = await Order.findById(orderId).populate("ticket");
+    console.log({ order });
     if (!order) {
       throw new NotFoundError();
     }
@@ -29,7 +34,6 @@ router.delete(
       ticket: {
         id: order.ticket.id,
       },
-
       version: order.version,
     });
     res.status(204).send(order);

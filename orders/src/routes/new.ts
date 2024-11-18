@@ -32,21 +32,18 @@ router.post(
   validationRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
+    console.log({ ticketId });
     // Find the ticket user trying to find in dataBase
-    console.log(ticketId);
     const ticket = await Ticket.findById(ticketId);
     console.log({ ticket });
     if (!ticket) {
       throw new NotFoundError();
     }
     const orderst = await Order.findOne({ ticket: ticketId });
-    // console.log(await orderst?.deleteOne());
     console.log(orderst);
     // Make sure that ticket is not already reserved
     const isReserved = await ticket.isReserved();
-    console.log(isReserved);
     if (isReserved) {
-      console.log("first");
       throw new BadRequestError("Ticket is already reserved");
     }
     // Calculate an expiration date for this order
@@ -60,11 +57,9 @@ router.post(
       expiresAt: expiration,
       ticket,
     });
-    console.log({ order });
     await order.save();
-
+    console.log({ order });
     // Publish an event saying that an order was created
-    console.log("version", order.version);
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
       version: order.version,

@@ -20,7 +20,7 @@ it("returns the ticket if the ticket is found", async () => {
       price,
     })
 
-    .expect(201);
+    .expect(200);
   // console.log(response);
 
   const ticketResponse = await request(app)

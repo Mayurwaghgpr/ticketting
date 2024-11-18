@@ -5,6 +5,7 @@ import {
   NotFoundError,
   validationRequest,
   currentUser,
+  BadRequestError,
 } from "@ticketwithspread/common";
 import { Ticket } from "../model/ticket";
 import { body } from "express-validator";
@@ -28,9 +29,15 @@ router.put(
     if (!ticket) {
       throw new NotFoundError();
     }
+
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket");
+    }
+
     if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
+
     ticket.set({ title: req.body.title, price: req.body.price });
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
@@ -40,6 +47,7 @@ router.put(
       userId: ticket.userId,
       version: ticket.version,
     });
+
     res.send(ticket);
   }
 );
