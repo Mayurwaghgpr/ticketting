@@ -13,7 +13,7 @@ import Jwt from "jsonwebtoken";
 const router = express.Router();
 
 router.post(
-  "/api/user/signup",
+  "/api/users/signup",
   [
     body("email").isEmail().withMessage("email must be valid"),
     body("password")
@@ -23,10 +23,6 @@ router.post(
   ],
   validationRequest,
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });

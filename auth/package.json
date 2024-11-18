@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@ticketwithspread/common": "^1.0.10",
+    "@ticketwithspread/common": "^1.0.30",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.7",
     "bcrypt": "^5.1.1",

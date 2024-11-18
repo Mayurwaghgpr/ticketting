@@ -12,7 +12,7 @@ import Jwt from "jsonwebtoken";
 const router = express.Router();
 
 router.post(
-  "/api/user/signin",
+  "/api/users/signin",
   [
     body("email").isEmail().withMessage("email must be a valid"),
     body("password")
@@ -30,7 +30,7 @@ router.post(
     const { email, password } = req.body;
     const userexist = await User.findOne({ email });
     if (!userexist) {
-      throw new NotFoundError();
+      throw new BadRequestError("Invalid credentials");
     }
     const match = await bcrypt.compare(password, userexist.password);
     if (!match) {

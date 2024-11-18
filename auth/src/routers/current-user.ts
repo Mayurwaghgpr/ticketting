@@ -3,8 +3,7 @@ import jwt from "jsonwebtoken";
 import { currentUser, requireAuth } from "@ticketwithspread/common";
 const router = express.Router();
 
-router.get("/api/user/currentuser", currentUser, (req, res) => {
-  console.log(req.currentUser);
+router.get("/api/users/currentuser", currentUser, (req, res) => {
   res.status(200).send({ currentuser: req.currentUser || null });
 });
 
