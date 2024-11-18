@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "@ticketwithspread/common";
+import {
+  RequestValidationError,
+  validationRequest,
+} from "@ticketwithspread/common";
 import "express-async-errors";
 import bcrypt from "bcrypt";
 import { User } from "../model/user";
@@ -9,7 +12,7 @@ import Jwt from "jsonwebtoken";
 const router = express.Router();
 
 router.post(
-  "/api/user/signin",
+  "/api/users/signin",
   [
     body("email").isEmail().withMessage("email must be a valid"),
     body("password")
@@ -17,6 +20,7 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("password must be between 4 to 20 characters"),
   ],
+  validationRequest,
   async (req: Request, res: Response) => {
     const error = validationResult(req);
     const errors = validationResult(req);
@@ -26,7 +30,7 @@ router.post(
     const { email, password } = req.body;
     const userexist = await User.findOne({ email });
     if (!userexist) {
-      throw new NotFoundError();
+      throw new BadRequestError("Invalid credentials");
     }
     const match = await bcrypt.compare(password, userexist.password);
     if (!match) {
