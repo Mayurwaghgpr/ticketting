@@ -30,11 +30,16 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
-            - name: REZPAY_KEY
+            - name: REZPAY_KEY_SECRET
               valueFrom:
                 secretKeyRef:
                   name: rezpay-secret
-                  key: REZPAY_KEY
+                  key: REZPAY_KEY_SECRET
+            - name: REZPAY_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: rezpay-id
+                  key: REZPAY_KEY_ID
 
 ---
 apiVersion: v1

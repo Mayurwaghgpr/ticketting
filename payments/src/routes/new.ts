@@ -44,7 +44,7 @@ router.post(
 
       // Verify Razorpay signature
       const generatedSignature = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+        .createHmac("sha256", process.env.REZPAY_KEY_SECRET!)
         .update(`${razorpayOrderId}|${razorpayPaymentId}`)
         .digest("hex");
 

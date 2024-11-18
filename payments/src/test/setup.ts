@@ -7,10 +7,10 @@ declare global {
 }
 
 jest.mock("../nats-wrapper");
-process.env.STRIPE_KEY =
-  "sk_test_51PImjZSFpkquKKWju1kKTtHZT800PzxGgWADX2cRH6HxZn92LdDCG7D4Y3pUIj1CGVCoN3bzmU4xnyh2GT2JsQYU00sfoLfgIy";
+process.env.REZPAY_KEY_ID = "rzp_test_9wNqsLBvmFbPeE";
+process.env.REZPAY_KEY_SECRET = "JfhHdmddG8bj0iGzBeJaGY2e";
 
-let mongo: MongoMemoryServer;
+let mongo: any;
 
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
@@ -24,19 +24,25 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   jest.clearAllMocks();
-  await mongoose.connection.dropDatabase();
+  if (mongoose.connection.db) {
+    const collections = await mongoose.connection.db.collections();
+
+    for (let collection of collections) {
+      await collection.deleteMany({});
+    }
+  }
 });
 
 afterAll(async () => {
   if (mongo) {
     await mongo.stop();
   }
-  await mongoose.disconnect();
+  await mongoose.connection.close();
 });
 
-global.signup = () => {
+global.signup = (id?: string) => {
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
   };
   const token = jwt.sign(payload, process.env.JWT_KEY!);

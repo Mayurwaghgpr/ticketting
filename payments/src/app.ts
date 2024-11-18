@@ -11,6 +11,7 @@ app.use(
   cookieSession({
     signed: false,
     secure: process.env.NODE_ENV !== "test",
+    keys: [process.env.JWT_KEY!],
   })
 );
 app.use(createdChargeRouter);
