@@ -3,6 +3,7 @@ import { body, validationResult, ValidationError } from "express-validator";
 import {
   RequestValidationError,
   BadRequestError,
+  validationRequest,
 } from "@ticketwithspread/common";
 import { User } from "../model/user";
 import "express-async-errors";
@@ -20,6 +21,7 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("password must be between 4 to 20 characters"),
   ],
+  validationRequest,
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
