@@ -23,7 +23,7 @@ export class ExpirationCompleteListener extends Listener<expirationCompleteEvent
     if (order.status === OrderStatus.Complete) {
       return msg.ack();
     }
-
+    console.log(this.client.publish);
     order.set({ status: OrderStatus.Cancelled });
     await order.save();
     new OrderCancelledPublisher(this.client).publish({

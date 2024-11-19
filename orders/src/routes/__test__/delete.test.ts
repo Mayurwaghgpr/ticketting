@@ -53,7 +53,6 @@ it("emits a order cancelled event", async () => {
     .set("Cookie", user)
     .send({ ticketId: ticket.id })
     .expect(201);
-  console.log("reciv ord", order);
 
   // make a request to cancel the order
   const response = await request(app)
@@ -61,7 +60,7 @@ it("emits a order cancelled event", async () => {
     .set("Cookie", user)
     .send()
     .expect(204);
-  console.log({ response });
+  console.log(natsWrapper.client.publish);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
