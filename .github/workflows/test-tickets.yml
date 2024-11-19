@@ -1,9 +1,38 @@
 name: test
 on:
-  pull_request
+  pull_request:
+    paths:
+      - "tickets/**"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: cd tickets && npm install && npm run test:ci
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: tickets
+
+      - name: Run tests
+        run: npm run test:ci
+        working-directory: tickets
+
+      - name: Archive test results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: tickets/test-results/
+
+      - name: Debug environment
+        run: |
+          node -v
+          npm -v
+          ls -la tickets

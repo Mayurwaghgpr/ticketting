@@ -28,6 +28,9 @@ router.delete(
       throw new NotAuthorizedError();
     }
     order.status = OrderStatus.Cancelled;
+
+    console.log(natsWrapper.client.publish); // Should print a Jest mock function
+
     await order.save();
     new OrderCancelledPublisher(natsWrapper.client).publish({
       id: order.id,

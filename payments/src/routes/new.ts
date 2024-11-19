@@ -56,7 +56,7 @@ router.post(
         payId: razorpayPaymentId,
       });
 
-      new PaymentCreatedPublisher(natsWrapper.client).publish({
+      new PaymentCreatedPublisher(natsWrapper.client)?.publish({
         id: payment.id,
         orderId: payment.orderId,
         payId: payment.payId,

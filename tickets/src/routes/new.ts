@@ -31,6 +31,7 @@ router.post(
       userId: req.currentUser!.id,
     });
     await ticket.save();
+    console.log(natsWrapper.client.publish); // Should print a Jest mock function
 
     new TicketCreatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
