@@ -59,8 +59,10 @@ router.post(
     });
     await order.save();
     console.log({ order });
+    console.log(natsWrapper.client.publish); // Should print a Jest mock function
+
     // Publish an event saying that an order was created
-    new OrderCreatedPublisher(natsWrapper.client).publish({
+    new OrderCreatedPublisher(natsWrapper.client)?.publish({
       id: order.id,
       version: order.version,
       status: order.status,

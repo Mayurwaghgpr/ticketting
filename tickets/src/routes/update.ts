@@ -40,6 +40,8 @@ router.put(
 
     ticket.set({ title: req.body.title, price: req.body.price });
     await ticket.save();
+    console.log(natsWrapper.client.publish); // Should print a Jest mock function
+
     new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
       title: ticket.title,
