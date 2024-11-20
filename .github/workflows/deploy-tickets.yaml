@@ -1,8 +1,10 @@
 name: deploy-tickets
 on:
   push:
-    branches: -master
-    paths: -"tickets/**"
+    branches:
+      - master
+    paths:
+      - "tickets/**"
 
 jobs:
   build:

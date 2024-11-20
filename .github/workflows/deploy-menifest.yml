@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - master
-    paths: -"infra/**"
+    paths:
+      - "infra/**"
 
 jobs:
   build:

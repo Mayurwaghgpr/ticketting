@@ -1,8 +1,10 @@
 name: deploy-expiration
 on:
   push:
-    branches: -master
-    paths: -"expiration/**"
+    branches:
+      - master
+    paths:
+      - "expiration/**"
 
 jobs:
   build:

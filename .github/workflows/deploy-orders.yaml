@@ -1,8 +1,10 @@
 name: deploy-orders
 on:
   push:
-    branches: -master
-    paths: -"orders/**"
+    branches:
+      - master
+    paths:
+      - "orders/**"
 
 jobs:
   build:
