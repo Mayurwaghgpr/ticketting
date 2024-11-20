@@ -2,7 +2,7 @@ import { OrderCreatedListener } from "./events/listeners/order-create-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
-  console.log("starting...");
+  console.log("starting....");
   if (!process.env.NATS_CLUSTER_ID) {
     throw new Error("MONGO_URI must be defined");
   }
