@@ -17,7 +17,7 @@ const LandingPage = ({ currentuser, tickets }) => {
 
   return (
     <div className="container mx-auto px-4 py-8 flex items-center flex-col">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Ticket List</h1>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Ticket List</h2>
       <table className="table-auto w-full max-w-[50rem] border-collapse border border-gray-300 rounded-md">
         <thead>
           <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
