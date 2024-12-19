@@ -53,7 +53,7 @@ it("return error if we fetch another users order", async () => {
     })
     .expect(201);
   //  Make request to fetch the order
-  console.log(global.signup());
+  // console.log(global.signup());
   await request(app)
     .get(`/api/orders/${body.id}`)
     .set("Cookie", global.signup())

@@ -9,12 +9,17 @@ import {
 
 const router = express.Router();
 
-router.get("/api/tickets/:id", async (req: Request, res: Response) => {
-  const ticket = await Ticket.findById(req.params.id);
-  if (!ticket) {
-    throw new NotFoundError();
+router.get(
+  "/api/tickets/:id",
+  currentUser,
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const ticket = await Ticket.findById(req.params.id);
+    if (!ticket) {
+      throw new NotFoundError();
+    }
+
+    res.send(ticket);
   }
-  console.log("sending", ticket);
-  res.send(ticket);
-});
+);
 export default router;

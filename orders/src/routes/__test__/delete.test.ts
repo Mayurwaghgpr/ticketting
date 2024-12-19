@@ -60,7 +60,6 @@ it("emits a order cancelled event", async () => {
     .set("Cookie", user)
     .send()
     .expect(204);
-  console.log(natsWrapper.client.publish);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

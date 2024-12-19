@@ -16,11 +16,10 @@ router.delete(
   currentUser,
   requireAuth,
   async (req: Request, res: Response) => {
-    console.log({ req });
     const { orderId } = req.params;
 
     const order = await Order.findById(orderId).populate("ticket");
-    console.log({ order });
+
     if (!order) {
       throw new NotFoundError();
     }
@@ -28,8 +27,6 @@ router.delete(
       throw new NotAuthorizedError();
     }
     order.status = OrderStatus.Cancelled;
-
-    console.log(natsWrapper.client.publish); // Should print a Jest mock function
 
     await order.save();
     new OrderCancelledPublisher(natsWrapper.client).publish({

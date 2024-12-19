@@ -23,7 +23,6 @@ router.post(
   ],
   validationRequest,
   async (req: Request, res: Response) => {
-    console.log(req.currentUser);
     const { title, price } = req.body;
     const ticket = Ticket.build({
       title,
@@ -31,7 +30,7 @@ router.post(
       userId: req.currentUser!.id,
     });
     await ticket.save();
-    console.log(natsWrapper.client.publish); // Should print a Jest mock function
+    // Should print a Jest mock function
 
     new TicketCreatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
