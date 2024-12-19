@@ -20,8 +20,7 @@ it("returns a status other than 401 if user is signed in", async () => {
     .post("/api/tickets")
     .set("Cookie", cookie)
     .send({});
-  console.log("Response status:", response.status); // For debugging
-  expect(response.status).not.toEqual(401); // Should succeed
+  console.log("Response status:", response.status); // For debugging  expect(response.status).not.toEqual(401); // Should succeed
 });
 
 it("returns an error if an invalid title is provided", async () => {
