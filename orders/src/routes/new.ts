@@ -32,15 +32,13 @@ router.post(
   validationRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
-    console.log({ ticketId });
+
     // Find the ticket user trying to find in dataBase
     const ticket = await Ticket.findById(ticketId);
-    console.log({ ticket });
     if (!ticket) {
       throw new NotFoundError();
     }
     const orderst = await Order.findOne({ ticket: ticketId });
-    console.log(orderst);
     // Make sure that ticket is not already reserved
     const isReserved = await ticket.isReserved();
     if (isReserved) {
@@ -58,8 +56,7 @@ router.post(
       ticket,
     });
     await order.save();
-
-    console.log(natsWrapper.client.publish); // Should print a Jest mock function
+    // Should print a Jest mock function
 
     // Publish an event saying that an order was created
     new OrderCreatedPublisher(natsWrapper.client)?.publish({

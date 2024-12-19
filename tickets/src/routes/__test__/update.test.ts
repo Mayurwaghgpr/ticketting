@@ -68,7 +68,7 @@ it("updates the ticket provided valid inputs", async () => {
   const ticketResponse = await request(app)
     .get(`/api/tickets/${response.body.id}`)
     .send();
-  console.log("response ", ticketResponse.body);
+
   expect(ticketResponse.body.title).toEqual("eqeefe");
   expect(ticketResponse.body.price).toEqual(40);
 });

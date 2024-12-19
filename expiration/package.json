@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ticketwithspread/common": "^1.0.26",
+    "@ticketwithspread/common": "^1.0.32",
     "@types/bull": "^3.15.9",
-    "bull": "^4.16.4",
+    "bull": "^4.16.5",
     "express-async-errors": "^3.1.1",
     "node-nats-streaming": "^0.3.2",
     "ts-node-dev": "^2.0.0",
